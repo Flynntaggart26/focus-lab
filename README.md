@@ -5,7 +5,7 @@
 [![Live](https://img.shields.io/badge/Live-flynntaggart26.github.io%2Ffocus--lab-6b5cff?style=for-the-badge)](https://flynntaggart26.github.io/focus-lab/)
 **Doğru link:** `https://flynntaggart26.github.io/focus-lab/` · **Stack:** Vanilla HTML/CSS/JS · **Storage:** `localStorage` (no account)
 
-> **Tasarım v4:** Tüm beyazlıklar kaldırıldı — **her kart mor-turkuaz karışık** (`linear-gradient 135deg #6b5cff → #00d9a5`). Timer kartı tam mor-turkuaz degrade (beyaz yazı), KPI’lar mor-turkuaz degrade, header/nav/border’lar mor-turkuaz tint, inputlar ve tablolar bile karışık gradient. Hiçbir yerde düz beyaz yok — tam ekran profesyonel mor-turkuaz.
+> **Tasarım v5:** Arkaplan **sade koyu profesyonel** (`#080a12`) geri alındı (dikkat dağıtan full gradient kaldırıldı). **Sadece beyaz yerler mor-turkuaz karışık:** Sayaçtaki beyaz halka + `25:00` yazısı `linear-gradient #6b5cff→#00d9a5` (halka `url(#timerGrad)` + yazı `background-clip:text`), Analytics’teki iki beyaz panel (`Interruptions vs Focus` içi ve `Auto-insights` kartı) `linear-gradient rgba 107,92,255 + 0,217,165` ile karışık.
 
 ---
 
@@ -56,7 +56,7 @@ A Pomodoro timer is easy. Understanding *why* you were focused is research.
 ```
 focus-lab/
 ├── index.html   # app shell
-├── style.css    # mor-turkuaz karışık tema (gradient 6b5cff→00d9a5, hiçbir yerde düz beyaz yok)
+├── style.css    # koyu profesyonel (080a12) + sadece beyaz sayaç/paneller mor-turkuaz gradient
 ├── app.js       # timer, analytics, report
 └── README.md
 ```
