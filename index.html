@@ -6,7 +6,7 @@
 <title>Focus Lab — Pomodoro + Focus Analytics Research</title>
 <meta name="description" content="Offline Pomodoro research lab — track focus sessions, interruptions & flow, generate a data-driven report. Split from StudyFlow.">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <header class="header">
@@ -39,10 +39,10 @@
       </div>
       <div class="timer-main">
         <div class="ring-wrap">
-          <svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" stroke="#e6e7ef" stroke-width="12" fill="none"/><circle id="progress" cx="100" cy="100" r="88" stroke="#5b5bd6" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="552.92" stroke-dashoffset="552.92" transform="rotate(-90 100 100)"/></svg>
+          <svg width="200" height="200" viewBox="0 0 200 200"><defs><linearGradient id="timerGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6b5cff"/><stop offset="100%" stop-color="#00d9a5"/></linearGradient></defs><circle cx="100" cy="100" r="88" stroke="url(#timerGrad)" stroke-width="12" fill="none" opacity="0.95"/><circle id="progress" cx="100" cy="100" r="88" stroke="#5b5bd6" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="552.92" stroke-dashoffset="552.92" transform="rotate(-90 100 100)"/></svg>
           <div class="ring-center">
             <div id="modeLabel" class="mode">FOCUS</div>
-            <div id="timeDisplay" class="time">25:00</div>
+            <div id="timeDisplay" class="time" style="background:linear-gradient(135deg,#6b5cff 0%,#00d9a5 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">25:00</div>
             <div id="cycleLabel" class="cycle">#1 • Focus</div>
           </div>
         </div>
@@ -88,11 +88,11 @@
       </div>
       <div class="grid2">
         <div class="chart"><h4>Technique comparison</h4><p style="font-size:11px;color:#6b7280">Avg focus & duration by preset</p><div id="techChart" class="bars"></div></div>
-        <div class="chart"><h4>Interruptions vs Focus</h4><p style="font-size:11px;color:#6b7280">Higher interruptions → lower focus</p><div id="scatter" style="height:160px;position:relative;background:#f8f9ff;border:1px solid #e6e7ef;border-radius:10px;overflow:hidden"></div></div>
+        <div class="chart"><h4>Interruptions vs Focus</h4><p style="font-size:11px;color:#6b7280">Higher interruptions → lower focus</p><div id="scatter" style="height:160px;position:relative;background:linear-gradient(135deg, rgba(107,92,255,.16) 0%, rgba(0,217,165,.16) 100%), #1c2036;border:1px solid rgba(107,92,255,.22);border-radius:10px;overflow:hidden"></div></div>
       </div>
-      <div class="card" style="margin-top:14px;background:#f8f9ff;border:1px dashed #cbd5e1">
+      <div class="card" style="margin-top:14px;background:linear-gradient(135deg, rgba(107,92,255,.12) 0%, rgba(0,217,165,.10) 100%), #141726;border:1px solid rgba(107,92,255,.22)">
         <h4>🧪 Auto-insights (research)</h4>
-        <ul id="insights" style="margin:8px 0 0 18px;font-size:12.5px;color:#334155"></ul>
+        <ul id="insights" style="margin:8px 0 0 18px;font-size:12.5px;color:#eef0ff"></ul>
       </div>
     </div>
   </section>
@@ -150,6 +150,6 @@
 </div>
 
 <footer style="max-width:1100px;margin:0 auto;padding:0 20px 24px;color:#8a8aa0;font-size:11px;text-align:center">Focus Lab • Split from StudyFlow • Offline-first • Data in localStorage • No tracking.</footer>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
