@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Lab — Pomodoro + Focus Analytics Research</title>
+<meta name="description" content="Offline Pomodoro research lab — track focus sessions, interruptions & flow, generate a data-driven report. Split from StudyFlow.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <div class="head-inner">
+    <div class="logo"><div class="mark">FL</div><div><h1>Focus Lab</h1><p>Pomodoro + Analytics • Research Build</p></div></div>
+    <div class="head-actions">
+      <button class="btn" onclick="exportJSON()">↗ Export JSON</button>
+      <button class="btn" onclick="document.getElementById('importFile').click()">↙ Import</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+      <button class="btn" onclick="openSettings()">⚙ Settings</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" data-tab="timer" onclick="switchTab('timer')">⏱ Timer</button>
+  <button class="nav-btn" data-tab="analytics" onclick="switchTab('analytics')">📊 Analytics</button>
+  <button class="nav-btn" data-tab="sessions" onclick="switchTab('sessions')">📝 Sessions</button>
+  <button class="nav-btn" data-tab="report" onclick="switchTab('report')">📄 Report</button>
+</nav>
+
+<main class="wrap">
+  <!-- TIMER -->
+  <section id="timer" class="section active">
+    <div class="timer-card">
+      <div class="presets" id="presets"></div>
+      <div class="task-row">
+        <div class="field" style="flex:1"><label>Current task (what are you focusing on?)</label><input id="taskInput" placeholder="e.g., SAT reading — passage analysis"></div>
+        <div class="field" style="max-width:220px"><label>Tag</label><input id="tagInput" placeholder="SAT, Deep Work..."></div>
+      </div>
+      <div class="timer-main">
+        <div class="ring-wrap">
+          <svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" stroke="#e6e7ef" stroke-width="12" fill="none"/><circle id="progress" cx="100" cy="100" r="88" stroke="#5b5bd6" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="552.92" stroke-dashoffset="552.92" transform="rotate(-90 100 100)"/></svg>
+          <div class="ring-center">
+            <div id="modeLabel" class="mode">FOCUS</div>
+            <div id="timeDisplay" class="time">25:00</div>
+            <div id="cycleLabel" class="cycle">#1 • Focus</div>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <button class="btn primary big" id="startBtn" onclick="toggleTimer()">▶ Start</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="skip()">Skip →</button>
+            <button class="btn" onclick="resetTimer()">Reset</button>
+          </div>
+          <div class="interrupt-box">
+            <div style="font-size:12px;font-weight:700">Interruptions this session</div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+              <button class="btn" onclick="addInterruption()">+1 Interruption</button>
+              <span id="intCount" style="font-family:Fraunces,serif;font-size:18px">0</span>
+              <span style="font-size:11px;color:#6b7280">taps, checks, distractions</span>
+            </div>
+          </div>
+          <div id="ratingBox" style="display:none" class="rating-box">
+            <div style="font-size:12px;font-weight:800">How focused were you? (1-5)</div>
+            <div class="stars" id="stars"></div>
+            <div style="display:flex;gap:8px;margin-top:8px"><button class="btn primary" onclick="saveSession()">Save session</button><button class="btn" onclick="discardSession()">Discard</button></div>
+          </div>
+        </div>
+      </div>
+      <div id="timerStats" class="timer-stats"></div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section id="analytics" class="section">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+        <h3>Analytics</h3>
+        <div style="display:flex;gap:8px">
+          <select id="range" class="select" onchange="renderAnalytics()"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="0">All time</option></select>
+          <button class="btn" onclick="clearAll()">Clear data</button>
+        </div>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="grid2">
+        <div class="chart"><h4>Daily focus minutes</h4><div id="dailyChart" class="bars"></div></div>
+        <div class="chart"><h4>Hourly focus — when you peak</h4><div id="hourChart" class="bars"></div></div>
+      </div>
+      <div class="grid2">
+        <div class="chart"><h4>Technique comparison</h4><p style="font-size:11px;color:#6b7280">Avg focus & duration by preset</p><div id="techChart" class="bars"></div></div>
+        <div class="chart"><h4>Interruptions vs Focus</h4><p style="font-size:11px;color:#6b7280">Higher interruptions → lower focus</p><div id="scatter" style="height:160px;position:relative;background:#f8f9ff;border:1px solid #e6e7ef;border-radius:10px;overflow:hidden"></div></div>
+      </div>
+      <div class="card" style="margin-top:14px;background:#f8f9ff;border:1px dashed #cbd5e1">
+        <h4>🧪 Auto-insights (research)</h4>
+        <ul id="insights" style="margin:8px 0 0 18px;font-size:12.5px;color:#334155"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSIONS -->
+  <section id="sessions" class="section">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+        <h3>Sessions</h3>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="exportCSV()">⬇ CSV</button>
+          <button class="btn" onclick="addSample()">+ Add sample</button>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="field"><label>Search</label><input id="sQ" placeholder="task, tag..." oninput="renderSessions()"></div>
+        <div class="field"><label>Type</label><select id="sType" onchange="renderSessions()"><option value="all">All</option><option value="work">Focus</option><option value="break">Break</option></select></div>
+        <div class="field"><label>Min focus</label><select id="sFocus" onchange="renderSessions()"><option value="0">All</option><option value="4">≥4</option><option value="3">≥3</option></select></div>
+      </div>
+      <div style="overflow:auto;margin-top:12px;border:1px solid #e6e7ef;border-radius:12px">
+        <table><thead><tr><th>Date</th><th>Task</th><th>Preset</th><th>Duration</th><th>Interrupt.</th><th>Focus</th><th>Status</th><th></th></tr></thead><tbody id="sessBody"></tbody></table>
+      </div>
+      <div id="sessMeta" style="margin-top:8px;font-size:12px;color:#6b7280"></div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="report" class="section">
+    <div class="card">
+      <h3>Research Report — Print / PDF</h3>
+      <p style="font-size:12px;color:#6b7280">Generated from your data. Share with a teacher, counselor, or add to portfolio. Use Analytics range to control period.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn primary" onclick="prepareReport(); setTimeout(()=>window.print(),180)">🖨 Print / Save PDF</button>
+        <button class="btn" onclick="exportCSV()">⬇ CSV</button>
+        <button class="btn" onclick="exportJSON()">↗ JSON</button>
+      </div>
+      <div id="reportArea" class="report-area"></div>
+    </div>
+  </section>
+</main>
+
+<div id="settingsModal" class="modal" style="display:none">
+  <div class="modal-card">
+    <button class="x" onclick="closeSettings()">✕</button>
+    <h3>Settings</h3>
+    <div class="form">
+      <div class="row2"><div class="field"><label>Focus (min)</label><input type="number" id="sFocusMin" min="1" max="120"></div><div class="field"><label>Short break (min)</label><input type="number" id="sBreakMin" min="1" max="30"></div></div>
+      <div class="row2"><div class="field"><label>Long break (min)</label><input type="number" id="sLongMin" min="1" max="60"></div><div class="field"><label>Long break every</label><input type="number" id="sLongEvery" min="2" max="12"></div></div>
+      <label style="font-size:12px;display:flex;gap:8px;align-items:center"><input type="checkbox" id="sAuto"> Auto-start next session</label>
+      <label style="font-size:12px;display:flex;gap:8px;align-items:center"><input type="checkbox" id="sSound"> Sound on finish</label>
+      <label style="font-size:12px;display:flex;gap:8px;align-items:center"><input type="checkbox" id="sNotify"> Browser notification</label>
+      <div style="display:flex;gap:8px;margin-top:12px"><button class="btn primary" onclick="saveSettings()" style="flex:1">Save</button><button class="btn" onclick="closeSettings()" style="flex:1">Cancel</button></div>
+    </div>
+  </div>
+</div>
+
+<footer style="max-width:1100px;margin:0 auto;padding:0 20px 24px;color:#8a8aa0;font-size:11px;text-align:center">Focus Lab • Split from StudyFlow • Offline-first • Data in localStorage • No tracking.</footer>
+<script src="app.js"></script>
+</body>
+</html>
