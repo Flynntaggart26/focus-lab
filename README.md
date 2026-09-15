@@ -5,7 +5,7 @@
 [![Live](https://img.shields.io/badge/Live-flynntaggart26.github.io%2Ffocus--lab-6b5cff?style=for-the-badge)](https://flynntaggart26.github.io/focus-lab/)
 **Doğru link:** `https://flynntaggart26.github.io/focus-lab/` · **Stack:** Vanilla HTML/CSS/JS · **Storage:** `localStorage` (no account)
 
-> **Tasarım:** Full-page koyu profesyonel tema — tüm sayfa `080a12` gece lacivert, kartlar `141726`, mor (`6b5cff`) odak / nane (`00d9a5`) dinlenme halkası, yumuşak glow. Artık küçük beyaz kutu değil, baştan sona koyu ve odak dostu.
+> **Tasarım v4:** Tüm beyazlıklar kaldırıldı — **her kart mor-turkuaz karışık** (`linear-gradient 135deg #6b5cff → #00d9a5`). Timer kartı tam mor-turkuaz degrade (beyaz yazı), KPI’lar mor-turkuaz degrade, header/nav/border’lar mor-turkuaz tint, inputlar ve tablolar bile karışık gradient. Hiçbir yerde düz beyaz yok — tam ekran profesyonel mor-turkuaz.
 
 ---
 
@@ -56,7 +56,7 @@ A Pomodoro timer is easy. Understanding *why* you were focused is research.
 ```
 focus-lab/
 ├── index.html   # app shell
-├── style.css    # full-page dark theme (080a12, professional violet/mint)
+├── style.css    # mor-turkuaz karışık tema (gradient 6b5cff→00d9a5, hiçbir yerde düz beyaz yok)
 ├── app.js       # timer, analytics, report
 └── README.md
 ```
