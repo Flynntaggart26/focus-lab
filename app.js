@@ -57,7 +57,7 @@ function updateDisplay(){
   document.getElementById('cycleLabel').textContent=`#${cycle} • ${mode==='focus' ? 'Focus' : 'Break'}`;
   const circ=2*Math.PI*88, pct= 1 - remaining/total;
   document.getElementById('progress').style.strokeDashoffset= circ - circ*pct;
-  document.getElementById('progress').style.stroke = mode==='focus'? '#5b5bd6' : '#059669';
+  document.getElementById('progress').style.stroke = mode==='focus'? '#d96c4a' : '#6a9a8a';
   document.getElementById('startBtn').textContent = running? '⏸ Pause' : '▶ Start';
 }
 function toggleTimer(){
@@ -69,12 +69,13 @@ function start(){
     // allow empty but nudge
   }
   running=true;
+  document.body.classList.add('focusing');
   startedAt=startedAt||new Date();
   timerId=setInterval(tick,1000);
   updateDisplay();
   if(window.Notification && settings.notify && Notification.permission==='default'){ Notification.requestPermission(); }
 }
-function pause(){ running=false; clearInterval(timerId); updateDisplay(); }
+function pause(){ running=false; document.body.classList.remove('focusing'); clearInterval(timerId); updateDisplay(); }
 function resetTimer(){
   pause();
   remaining = (mode==='focus'? settings.focus : (cycle%settings.longEvery===0? settings.longBreak: settings.break))*60;
