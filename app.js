@@ -57,7 +57,7 @@ function updateDisplay(){
   document.getElementById('cycleLabel').textContent=`#${cycle} • ${mode==='focus' ? 'Focus' : 'Break'}`;
   const circ=2*Math.PI*88, pct= 1 - remaining/total;
   document.getElementById('progress').style.strokeDashoffset= circ - circ*pct;
-  document.getElementById('progress').style.stroke = mode==='focus'? '#d96c4a' : '#6a9a8a';
+  document.getElementById('progress').style.stroke = mode==='focus'? '#6b5cff' : '#00d9a5';
   document.getElementById('startBtn').textContent = running? '⏸ Pause' : '▶ Start';
 }
 function toggleTimer(){
