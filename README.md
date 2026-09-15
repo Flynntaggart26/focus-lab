@@ -2,7 +2,10 @@
 
 > Offline research lab to track focus sessions, interruptions & flow, and generate a data-driven report. Split from StudyFlow, focused only on **focus**.
 
-**Live:** https://flynntaggart26.github.io/focus-lab/ · **Stack:** Vanilla HTML/CSS/JS · **Storage:** `localStorage` (no account)
+[![Live](https://img.shields.io/badge/Live-flynntaggart26.github.io%2Ffocus--lab-6b5cff?style=for-the-badge)](https://flynntaggart26.github.io/focus-lab/)
+**Doğru link:** `https://flynntaggart26.github.io/focus-lab/` · **Stack:** Vanilla HTML/CSS/JS · **Storage:** `localStorage` (no account)
+
+> **Tasarım:** Full-page koyu profesyonel tema — tüm sayfa `080a12` gece lacivert, kartlar `141726`, mor (`6b5cff`) odak / nane (`00d9a5`) dinlenme halkası, yumuşak glow. Artık küçük beyaz kutu değil, baştan sona koyu ve odak dostu.
 
 ---
 
@@ -52,9 +55,9 @@ A Pomodoro timer is easy. Understanding *why* you were focused is research.
 
 ```
 focus-lab/
-├── index.html
-├── style.css
-├── app.js
+├── index.html   # app shell
+├── style.css    # full-page dark theme (080a12, professional violet/mint)
+├── app.js       # timer, analytics, report
 └── README.md
 ```
 
@@ -65,6 +68,18 @@ git clone https://github.com/Flynntaggart26/focus-lab.git
 cd focus-lab
 open index.html
 ```
+veya direkt **https://flynntaggart26.github.io/focus-lab/**
+
+---
+
+## 🔗 Link nerede açılıyor? Bilgisayarım / internetim etkiler mi?
+
+**Link:** `https://flynntaggart26.github.io/focus-lab/` — GitHub Pages üzerinde barınıyor.
+
+*   **Nerede açılıyor:** GitHub'ın sunucularında (ABD). Senin bilgisayarında değil. Dünyanın her yerinden, telefondan/bilgisayardan tarayıcıyla açılır. Kurulum yok.
+*   **Bilgisayarın açık/kapalı olması fark eder mi? Hayır.** Site GitHub'da host ediliyor. Sen bilgisayarını kapatsan da site 7/24 açık kalır. Başvuru jürisi gece de açabilir.
+*   **İnternet harcar mı? Çok az.** İlk açılışta tek sayfa (~35KB HTML+CSS+JS) + fontlar indirilir. Sonrası tüm hesaplama tarayıcıda. Timer, analytics, PDF tamamen offline çalışır. İnternet sadece sayfayı ilk yüklerken ve Google Fonts için gerekir. Video gibi tüketmez — 1 saat odaklanma <1MB.
+*   **Veriler nerede?** Tüm seanslar `localStorage`'da **senin tarayıcında** saklanır, GitHub'a gönderilmez. Temizlemezsen kalır. Yedek için `Export JSON` kullan.
 
 ## License
 
